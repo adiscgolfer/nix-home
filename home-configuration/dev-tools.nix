@@ -86,5 +86,7 @@
     grep = "rg";
     find = "fd";
     lg = "lazygit";
+    cl = "claude";
+    clu = "claude /usage";
   };
 }
