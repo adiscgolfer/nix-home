@@ -14,7 +14,6 @@ Pull this repo on a new Mac, follow the steps below, and you'll have your full e
 - **Git**: delta for diffs, lazygit TUI, GitHub CLI
 - **Docker**: Colima (no Docker Desktop needed), lazydocker TUI, dive
 - **Go**: compiler, gopls language server, golangci-lint, delve debugger
-- **.NET**: dotnet-sdk 9
 - **Other**: fzf, jq, yq, httpie, direnv, claude-code, and more
 
 ---
