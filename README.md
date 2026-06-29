@@ -51,7 +51,7 @@ nix --version
 ## Step 2 — Clone this repo
 
 ```sh
-git clone https://github.com/<your-github-username>/nix-home.git ~/projects/utils/nix-home
+git clone https://github.com/adiscgolfer/nix-home.git ~/projects/utils/nix-home
 cd ~/projects/utils/nix-home
 ```
 
