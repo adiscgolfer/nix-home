@@ -42,9 +42,6 @@
     # Node.js
     nodejs
 
-    # .NET/C# development
-    # dotnet-sdk_9  # .NET 9 SDK (includes runtime, latest LTS)
-
     # Utilities
     tree          # Visualize directory structure
     tldr          # Simplified man pages
