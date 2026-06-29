@@ -42,6 +42,10 @@
     # Node.js
     nodejs
 
+    # Terminal recording
+    asciinema     # Record terminal sessions
+    agg           # Convert asciinema recordings to GIF
+
     # Utilities
     tree          # Visualize directory structure
     tldr          # Simplified man pages
