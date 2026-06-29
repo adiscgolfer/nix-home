@@ -14,10 +14,6 @@
   programs.bash.enable = true;
   programs.zsh = {
     enable = true;
-    shellAliases = {
-      ll = "eza -la --git";
-      h = "history";
-    };
     initContent = ''
       [[ -f ~/.secrets ]] && source ~/.secrets
       eval "$(/opt/homebrew/bin/brew shellenv)"
