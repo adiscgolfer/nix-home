@@ -81,15 +81,16 @@
 
   # Shell aliases for better CLI tools
   home.shellAliases = {
-    ls = "eza";
-    ll = "eza -la --git";
-    lt = "eza --tree --level=2";
     cat = "bat";
-    grep = "rg";
-    find = "fd";
-    h = "history";
-    lg = "lazygit";
     cl = "claude";
     clu = "claude /usage";
+    find = "fd";
+    grep = "rg";
+    gs = "git status";
+    h = "history";
+    lg = "lazygit";
+    ll = "eza -la --git";
+    ls = "eza";
+    lt = "eza --tree --level=2";
   };
 }
