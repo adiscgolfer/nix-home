@@ -134,7 +134,8 @@ You'll see a menu of available commands. The most useful one:
 
 | Command | What it does |
 |---|---|
-| `update-everything` | Updates `flake.lock`, rebuilds darwin + home configs, and runs garbage collection |
+| `update-everything` | Updates `flake.lock`, rebuilds darwin + home configs, and runs garbage collection (keeps 1 old generation) |
+| `diff-last-update` | Show which packages changed version since the last update |
 | `nh darwin switch .` | Apply only macOS/darwin changes |
 | `nh home switch .` | Apply only home-manager changes |
 | `nh clean all` | Garbage collect old generations |

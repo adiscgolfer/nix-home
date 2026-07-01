@@ -92,7 +92,36 @@
                   let
                     nh = "${pkgs.nh}/bin/nh";
                   in
-                  "${nh} darwin switch -u --commit-lock-file . && ${nh} home switch . && ${nh} clean all";
+                  "${nh} darwin switch -u --commit-lock-file . && ${nh} home switch . && ${nh} clean all --keep 1";
+              }
+              {
+                help = "Show what packages changed since the last update";
+                name = "diff-last-update";
+                command =
+                  let
+                    nix = "${pkgs.nix}/bin/nix";
+                    profilesDir = "/nix/var/nix/profiles";
+                    hmProfilesDir = "$HOME/.local/state/nix/profiles";
+                  in
+                  ''
+                    echo "=== darwin/system ===" && \
+                    prev_sys=$(ls -d ${profilesDir}/system-*-link 2>/dev/null | sort -V | tail -2 | head -1) && \
+                    curr_sys=$(ls -d ${profilesDir}/system-*-link 2>/dev/null | sort -V | tail -1) && \
+                    if [ -n "$prev_sys" ] && [ "$prev_sys" != "$curr_sys" ]; then
+                      ${nix} store diff-closures "$prev_sys" "$curr_sys"
+                    else
+                      echo "Only one system generation — run update-everything first"
+                    fi && \
+                    echo "" && \
+                    echo "=== home-manager ===" && \
+                    prev_hm=$(ls -d ${hmProfilesDir}/home-manager-*-link 2>/dev/null | sort -V | tail -2 | head -1) && \
+                    curr_hm=$(ls -d ${hmProfilesDir}/home-manager-*-link 2>/dev/null | sort -V | tail -1) && \
+                    if [ -n "$prev_hm" ] && [ "$prev_hm" != "$curr_hm" ]; then
+                      ${nix} store diff-closures "$prev_hm" "$curr_hm"
+                    else
+                      echo "Only one home-manager generation — run update-everything first"
+                    fi
+                  '';
               }
             ];
             motd = ''
