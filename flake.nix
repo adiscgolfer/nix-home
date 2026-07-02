@@ -92,7 +92,7 @@
                   let
                     nh = "${pkgs.nh}/bin/nh";
                   in
-                  "${nh} darwin switch -u --commit-lock-file . && ${nh} home switch . && ${nh} clean all --keep 1";
+                  "${nh} darwin switch -u --commit-lock-file . && ${nh} home switch . && ${nh} clean all --keep 2";
               }
               {
                 help = "Show what packages changed since the last update";
