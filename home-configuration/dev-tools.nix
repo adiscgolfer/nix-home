@@ -54,6 +54,7 @@
 
     # Claude Code
     claude-code
+    rtk           # Rust Token Killer - token-optimized CLI proxy
   ];
 
   # Enhanced Git diffs with delta
