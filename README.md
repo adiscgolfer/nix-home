@@ -150,6 +150,9 @@ You'll see a menu of available commands. The most useful one:
 
 Changes are applied atomically — if a build fails, your previous config stays active.
 
+> Confused about when to run `direnv allow` vs `nh ... switch` vs opening a new
+> terminal? See [WORKFLOW.md](WORKFLOW.md) for a daily-use cheatsheet.
+
 ---
 
 ## Troubleshooting
