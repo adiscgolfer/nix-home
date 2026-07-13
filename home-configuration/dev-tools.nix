@@ -71,6 +71,8 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    # atuin owns Ctrl-R history search; keep fzf for Ctrl-T / Alt-C
+    historyWidget.command = "";
     defaultCommand = "fd --type f --hidden --follow --exclude .git";
     defaultOptions = [
       "--height 40%"
