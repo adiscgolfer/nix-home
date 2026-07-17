@@ -16,6 +16,10 @@
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Temporary pin: watchexec on current unstable has no cache.nixos.org
+    # binary and fails to link locally (cctools ld crash on macOS 26).
+    # Remove this input + the overlay below once hydra has it cached.
+    nixpkgs-watchexec.url = "github:NixOS/nixpkgs/e8273b29fe1390ec8d4603f2477357555291432e";
   };
 
   outputs =
@@ -25,6 +29,7 @@
       home-manager,
       nixpkgs,
       devshell,
+      ...
     }:
 
     let
@@ -49,7 +54,14 @@
       # Build home configuration using:
       # $ home-manager switch --flake ".#$USER"
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            (final: prev: {
+              inherit (inputs.nixpkgs-watchexec.legacyPackages.${system}) watchexec;
+            })
+          ];
+        };
         extraSpecialArgs = {
           inherit self inputs;
         };
