@@ -51,6 +51,7 @@
     tldr          # Simplified man pages
     watch         # Monitor command output
     cmux          # macOS terminal for AI coding agents (built on Ghostty)
+    herdr         # Agent multiplexer TUI (tmux for coding agents)
 
     # Claude Code
     claude-code
