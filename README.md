@@ -51,8 +51,8 @@ nix --version
 ## Step 2 — Clone this repo
 
 ```sh
-git clone https://github.com/adiscgolfer/nix-home.git ~/projects/utils/nix-home
-cd ~/projects/utils/nix-home
+git clone https://github.com/adiscgolfer/nix-home.git ~/nix-home
+cd ~/nix-home
 ```
 
 ---
@@ -62,8 +62,8 @@ cd ~/projects/utils/nix-home
 Open `flake.nix` and find these two lines near the top of the `let` block:
 
 ```nix
-username = "adiscgolfer";
-hostname  = "mbp-adg";
+username = "your-username";
+hostname  = "your-hostname";
 ```
 
 - **`username`** must match your macOS login username. Find yours with:
@@ -134,7 +134,7 @@ You'll see a menu of available commands. The most useful one:
 
 | Command | What it does |
 |---|---|
-| `update-everything` | Updates `flake.lock`, rebuilds darwin + home configs, and runs garbage collection (keeps 1 old generation) |
+| `update-everything` | Updates `flake.lock`, rebuilds darwin + home configs, and runs garbage collection (keeps 2 old generations) |
 | `diff-last-update` | Show which packages changed version since the last update |
 | `nh darwin switch .` | Apply only macOS/darwin changes |
 | `nh home switch .` | Apply only home-manager changes |
