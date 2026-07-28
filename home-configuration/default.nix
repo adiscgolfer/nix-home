@@ -3,6 +3,7 @@
 {
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "claude-code"
+    "tableplus"
   ];
 
   imports = [
@@ -11,6 +12,7 @@
     ./dev-tools.nix
     ./alacritty.nix
     ./ollama.nix
+    ./claude.nix
   ];
 
   programs.home-manager.enable = true;
