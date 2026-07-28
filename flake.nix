@@ -16,10 +16,6 @@
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Temporary pin: watchexec on current unstable has no cache.nixos.org
-    # binary and fails to link locally (cctools ld crash on macOS 26).
-    # Remove this input + the overlay below once hydra has it cached.
-    nixpkgs-watchexec.url = "github:NixOS/nixpkgs/e8273b29fe1390ec8d4603f2477357555291432e";
   };
 
   outputs =
@@ -56,11 +52,6 @@
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [
-            (final: prev: {
-              inherit (inputs.nixpkgs-watchexec.legacyPackages.${system}) watchexec;
-            })
-          ];
         };
         extraSpecialArgs = {
           inherit self inputs;
@@ -98,41 +89,43 @@
                 package = inputs.nix-darwin.packages.${system}.darwin-rebuild;
               }
               {
-                help = "Update your nix setup. Update flake.lock, and switchs (with a little gc)";
+                help = "Update your nix setup. Update flake.lock, switch, show what changed, then gc)";
                 name = "update-everything";
                 command =
                   let
                     nh = "${pkgs.nh}/bin/nh";
-                  in
-                  "${nh} darwin switch -u --commit-lock-file . && ${nh} home switch . && ${nh} clean all --keep 2";
-              }
-              {
-                help = "Show what packages changed since the last update";
-                name = "diff-last-update";
-                command =
-                  let
                     nix = "${pkgs.nix}/bin/nix";
                     profilesDir = "/nix/var/nix/profiles";
                     hmProfilesDir = "$HOME/.local/state/nix/profiles";
                   in
                   ''
-                    echo "=== darwin/system ===" && \
-                    prev_sys=$(ls -d ${profilesDir}/system-*-link 2>/dev/null | sort -V | tail -2 | head -1) && \
-                    curr_sys=$(ls -d ${profilesDir}/system-*-link 2>/dev/null | sort -V | tail -1) && \
-                    if [ -n "$prev_sys" ] && [ "$prev_sys" != "$curr_sys" ]; then
-                      ${nix} store diff-closures "$prev_sys" "$curr_sys"
+                    pre_sys=$(ls -d ${profilesDir}/system-*-link 2>/dev/null | sort -V | tail -1) && \
+                    pre_hm=$(ls -d ${hmProfilesDir}/home-manager-*-link 2>/dev/null | sort -V | tail -1) && \
+                    ${nh} darwin switch -u --commit-lock-file . && \
+                    ${nh} home switch . && \
+                    echo "" && \
+                    echo "######################################################" && \
+                    echo "##         WHAT CHANGED — darwin/system             ##" && \
+                    echo "######################################################" && \
+                    if [ -n "$pre_sys" ]; then
+                      ${nix} store diff-closures "$pre_sys" ${profilesDir}/system
                     else
-                      echo "Only one system generation — run update-everything first"
+                      echo "Only one system generation — run update-everything again next time"
                     fi && \
                     echo "" && \
-                    echo "=== home-manager ===" && \
-                    prev_hm=$(ls -d ${hmProfilesDir}/home-manager-*-link 2>/dev/null | sort -V | tail -2 | head -1) && \
-                    curr_hm=$(ls -d ${hmProfilesDir}/home-manager-*-link 2>/dev/null | sort -V | tail -1) && \
-                    if [ -n "$prev_hm" ] && [ "$prev_hm" != "$curr_hm" ]; then
-                      ${nix} store diff-closures "$prev_hm" "$curr_hm"
+                    echo "######################################################" && \
+                    echo "##         WHAT CHANGED — home-manager              ##" && \
+                    echo "######################################################" && \
+                    if [ -n "$pre_hm" ]; then
+                      ${nix} store diff-closures "$pre_hm" ${hmProfilesDir}/home-manager
                     else
-                      echo "Only one home-manager generation — run update-everything first"
-                    fi
+                      echo "Only one home-manager generation — run update-everything again next time"
+                    fi && \
+                    echo "" && \
+                    echo "######################################################" && \
+                    echo "##                    GC                            ##" && \
+                    echo "######################################################" && \
+                    ${nh} clean all --keep 2
                   '';
               }
             ];
