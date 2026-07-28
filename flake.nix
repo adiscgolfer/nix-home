@@ -89,7 +89,7 @@
                 package = inputs.nix-darwin.packages.${system}.darwin-rebuild;
               }
               {
-                help = "Update your nix setup. Update flake.lock, switch, show what changed, then gc)";
+                help = "Update your nix setup. Update flake.lock, switch, gc, then show what changed)";
                 name = "update-everything";
                 command =
                   let
@@ -103,29 +103,31 @@
                     pre_hm=$(ls -d ${hmProfilesDir}/home-manager-*-link 2>/dev/null | sort -V | tail -1) && \
                     ${nh} darwin switch -u --commit-lock-file . && \
                     ${nh} home switch . && \
-                    echo "" && \
-                    echo "######################################################" && \
-                    echo "##         WHAT CHANGED — darwin/system             ##" && \
-                    echo "######################################################" && \
                     if [ -n "$pre_sys" ]; then
-                      ${nix} store diff-closures "$pre_sys" ${profilesDir}/system
+                      sys_diff=$(${nix} store diff-closures "$pre_sys" ${profilesDir}/system)
                     else
-                      echo "Only one system generation — run update-everything again next time"
+                      sys_diff="Only one system generation — run update-everything again next time"
                     fi && \
-                    echo "" && \
-                    echo "######################################################" && \
-                    echo "##         WHAT CHANGED — home-manager              ##" && \
-                    echo "######################################################" && \
                     if [ -n "$pre_hm" ]; then
-                      ${nix} store diff-closures "$pre_hm" ${hmProfilesDir}/home-manager
+                      hm_diff=$(${nix} store diff-closures "$pre_hm" ${hmProfilesDir}/home-manager)
                     else
-                      echo "Only one home-manager generation — run update-everything again next time"
+                      hm_diff="Only one home-manager generation — run update-everything again next time"
                     fi && \
                     echo "" && \
                     echo "######################################################" && \
                     echo "##                    GC                            ##" && \
                     echo "######################################################" && \
-                    ${nh} clean all --keep 2
+                    ${nh} clean all --keep 2 && \
+                    echo "" && \
+                    echo "######################################################" && \
+                    echo "##         WHAT CHANGED — darwin/system             ##" && \
+                    echo "######################################################" && \
+                    echo "$sys_diff" && \
+                    echo "" && \
+                    echo "######################################################" && \
+                    echo "##         WHAT CHANGED — home-manager              ##" && \
+                    echo "######################################################" && \
+                    echo "$hm_diff"
                   '';
               }
             ];
