@@ -97,30 +97,42 @@ if [ -n "$model" ]; then
   parts_out+=("$(printf '\033[0;90m%s\033[0m' "$model")")
 fi
 
+# Pick a color escape based on a usage percentage (0-100)
+pct_color() {
+  local n="$1"
+  if [ "$n" -ge 90 ]; then
+    printf '\033[0;31m'  # red
+  elif [ "$n" -ge 70 ]; then
+    printf '\033[0;33m'  # yellow
+  else
+    printf '\033[0;32m'  # green
+  fi
+}
+
 # Context remaining
 if [ -n "$remaining" ]; then
   used_int=$(printf '%.0f' "$(echo "100 - $remaining" | bc)")
-  if [ "$used_int" -gt 80 ]; then
-    ctx_color='\033[0;31m'  # red when high
-  else
-    ctx_color='\033[0;90m'  # dim otherwise
-  fi
-  parts_out+=("$(printf "${ctx_color}ctx:%s%%\033[0m" "$used_int")")
+  ctx_color=$(pct_color "$used_int")
+  parts_out+=("$(printf "ctx:${ctx_color}%s%%\033[0m" "$used_int")")
 fi
 
-# Rate limits
+# Rate limits (only the ##% value colored by its own usage)
 if [ -n "$five_hour" ] || [ -n "$seven_day" ]; then
   rl_str=""
   if [ -n "$five_hour" ]; then
-    rl_str="5h:$(printf '%.0f' "$five_hour")%"
-    [ -n "$five_hour_reset_local" ] && rl_str="$rl_str @$five_hour_reset_local"
+    five_hour_int=$(printf '%.0f' "$five_hour")
+    seg="$(printf "5h:$(pct_color "$five_hour_int")%s%%\033[0m" "$five_hour_int")"
+    [ -n "$five_hour_reset_local" ] && seg="$seg @$five_hour_reset_local"
+    rl_str="$seg"
   fi
   if [ -n "$seven_day" ]; then
+    seven_day_int=$(printf '%.0f' "$seven_day")
+    seg="$(printf "7d:$(pct_color "$seven_day_int")%s%%\033[0m" "$seven_day_int")"
+    [ -n "$seven_day_reset_local" ] && seg="$seg @$seven_day_reset_local"
     [ -n "$rl_str" ] && rl_str="$rl_str "
-    rl_str="${rl_str}7d:$(printf '%.0f' "$seven_day")%"
-    [ -n "$seven_day_reset_local" ] && rl_str="$rl_str @$seven_day_reset_local"
+    rl_str="$rl_str$seg"
   fi
-  parts_out+=("$(printf '\033[0;90m%s\033[0m' "$rl_str")")
+  parts_out+=("$rl_str")
 fi
 
 # Time
