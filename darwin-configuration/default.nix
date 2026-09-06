@@ -5,6 +5,38 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [ curl ];
 
+  system.primaryUser = "adiscgolfer";
+
+  homebrew = {
+    enable = true;
+    onActivation.autoUpdate = true;
+    onActivation.cleanup = "zap"; # removes casks/brews/taps not listed here
+
+    taps = [
+      "ngrok/ngrok"
+      "supabase/tap"
+    ];
+
+    casks = [
+      "claude-code"
+      "db-browser-for-sqlite"
+      "docker-desktop"
+      "ghostty"
+      "iterm2"
+      "ngrok"
+      "opensuperwhisper"
+      "stats"
+      "visual-studio-code"
+    ];
+
+    brews = [
+      "awscli"
+      "node"
+      "supabase/tap/supabase"
+      "terraform"
+    ];
+  };
+
   # Auto upgrade nix package and the daemon service.
   nix.package = pkgs.nix;
 

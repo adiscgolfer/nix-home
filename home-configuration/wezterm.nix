@@ -33,6 +33,21 @@
         scrollback_lines = 10000,
 
         default_prog = { "${pkgs.zsh}/bin/zsh", "-l" },
+
+        keys = {
+          { key = "d", mods = "CMD", action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" } },
+          { key = "d", mods = "CMD|SHIFT", action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" } },
+          { key = "w", mods = "CMD", action = wezterm.action.CloseCurrentPane { confirm = true } },
+          { key = "z", mods = "CMD|SHIFT", action = wezterm.action.TogglePaneZoomState },
+          { key = "LeftArrow", mods = "CMD|OPT", action = wezterm.action.ActivatePaneDirection "Left" },
+          { key = "RightArrow", mods = "CMD|OPT", action = wezterm.action.ActivatePaneDirection "Right" },
+          { key = "UpArrow", mods = "CMD|OPT", action = wezterm.action.ActivatePaneDirection "Up" },
+          { key = "DownArrow", mods = "CMD|OPT", action = wezterm.action.ActivatePaneDirection "Down" },
+          { key = "LeftArrow", mods = "CMD|SHIFT", action = wezterm.action.AdjustPaneSize { "Left", 5 } },
+          { key = "RightArrow", mods = "CMD|SHIFT", action = wezterm.action.AdjustPaneSize { "Right", 5 } },
+          { key = "UpArrow", mods = "CMD|SHIFT", action = wezterm.action.AdjustPaneSize { "Up", 5 } },
+          { key = "DownArrow", mods = "CMD|SHIFT", action = wezterm.action.AdjustPaneSize { "Down", 5 } },
+        },
       }
 
       -- Dim unfocused windows so the focused one is obvious at a glance.
