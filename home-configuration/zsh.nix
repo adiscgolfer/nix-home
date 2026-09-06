@@ -68,4 +68,8 @@
     enable = true;
     # daemon.enable = true; # still experimental
   };
+
+  home.shellAliases = {
+    nv = "nvim";
+  };
 }
