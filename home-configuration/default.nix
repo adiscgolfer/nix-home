@@ -11,6 +11,7 @@
     ./colima.nix
     ./dev-tools.nix
     ./alacritty.nix
+    ./wezterm.nix
     ./ollama.nix
     ./claude.nix
   ];

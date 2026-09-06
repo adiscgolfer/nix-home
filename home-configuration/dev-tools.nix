@@ -33,6 +33,9 @@
     dive          # Explore Docker image layers
     lazydocker    # Interactive Docker TUI
 
+    # Fly.io
+    flyctl        # Fly.io deploy CLI
+
     # Go development
     go            # Go compiler and tools
     gopls         # Go language server (includes goimports and other tools)
