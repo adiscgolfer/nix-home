@@ -6,10 +6,7 @@
 }:
 
 {
-  home.sessionVariables = {
-    EDITOR = "vi";
-    VISUAL = "vi";
-  };
+  # EDITOR/VISUAL now set by programs.neovim.defaultEditor in nvim.nix
 
   programs.bash.enable = true;
   programs.zsh = {
