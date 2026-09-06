@@ -14,6 +14,9 @@
     ./wezterm.nix
     ./ollama.nix
     ./claude.nix
+    ./herdr.nix
+    ./nvim.nix
+    ./pi.nix
   ];
 
   programs.home-manager.enable = true;
