@@ -14,6 +14,8 @@
     # generated provider/lua-path shim through wrapper args instead of
     # writing it to .config/nvim/init.lua (avoids a target-file conflict).
     sideloadInitLua = true;
+    withRuby = false;
+    withPython3 = false;
   };
 
   # LSP servers, installed declaratively so nvim-lspconfig finds them on PATH
