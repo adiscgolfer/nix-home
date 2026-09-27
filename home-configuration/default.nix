@@ -17,6 +17,7 @@
     ./herdr.nix
     ./nvim.nix
     ./pi.nix
+    ./zed.nix
   ];
 
   programs.home-manager.enable = true;

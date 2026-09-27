@@ -71,5 +71,6 @@
 
   home.shellAliases = {
     nv = "nvim";
+    gf = "git fetch";
   };
 }

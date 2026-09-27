@@ -10,6 +10,8 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
     # We manage init.lua ourselves via home.file below; sideload HM's
     # generated provider/lua-path shim through wrapper args instead of
     # writing it to .config/nvim/init.lua (avoids a target-file conflict).

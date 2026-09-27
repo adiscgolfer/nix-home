@@ -8,6 +8,10 @@
 {
   # herdr (agent multiplexer TUI) config - tmux-style pane/tab keybinds
   home.file.".config/herdr/config.toml".text = ''
+    # Dismissed - avoids "failed to save onboarding setting" errors, since this
+    # file is a nix-managed read-only symlink herdr can't write its own ack to.
+    onboarding = false
+
     [keys]
     prefix = "ctrl+b"
     focus_pane_left  = "prefix+h"
