@@ -14,7 +14,7 @@ Pull this repo on a new Mac, follow the steps below, and you'll have your full e
 - **Git**: delta for diffs, lazygit TUI, GitHub CLI
 - **Docker**: Colima (no Docker Desktop needed), lazydocker TUI, dive
 - **Go**: compiler, gopls language server, golangci-lint, delve debugger
-- **Other**: fzf, jq, yq, httpie, direnv, and more (Claude Code via Homebrew cask)
+- **Other**: fzf, jq, yq, httpie, direnv, and more (Claude Code: native installer, self-updating, not managed here)
 
 ---
 
@@ -100,6 +100,12 @@ nix run home-manager/master -- switch --flake ".#$(whoami)"
 ```
 
 Again, open a new terminal when it's done. You should now have your full prompt, aliases, and tools available.
+
+Claude Code is not managed by nix or Homebrew here. Install it with the native installer, which puts it in `~/.local/bin` (already on PATH) and keeps it updated in the background:
+
+```sh
+curl -fsSL https://claude.ai/install.sh | bash
+```
 
 ---
 

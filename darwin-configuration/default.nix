@@ -18,7 +18,6 @@
     ];
 
     casks = [
-      "claude-code"
       "db-browser-for-sqlite"
       "docker-desktop"
       "ghostty"
