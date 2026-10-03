@@ -56,8 +56,6 @@
     cmux          # macOS terminal for AI coding agents (built on Ghostty)
     herdr         # Agent multiplexer TUI (tmux for coding agents)
 
-    # Claude Code
-    claude-code
     rtk           # Rust Token Killer - token-optimized CLI proxy
 
     # Database GUI
